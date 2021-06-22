@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\AnnouncementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 
 /**
  * @ORM\Entity(repositoryClass=AnnouncementRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Announcement
 {
@@ -61,6 +63,16 @@ class Announcement
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initSlug()
+    {
+        $slugger = new Slugify();
+        $this->slug = $slugger->slugify($this->title);
+    }
 
     public function getId(): ?int
     {
