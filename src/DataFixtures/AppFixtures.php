@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Announcement;
+use App\Entity\Comment;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -15,7 +16,7 @@ class AppFixtures extends Fixture
     {
         // use the factory to create a Faker\Generator instance
         $faker = Factory::create();
-        $slugger = new Slugify(); // generate a slug from a given sentence(the announcement title)
+        //$slugger = new Slugify(); // generate a slug from a given sentence(the announcement title)
 
         for($i=0; $i<6; $i++)
         {
@@ -28,6 +29,19 @@ class AppFixtures extends Fixture
             $announcement->setCreatedAt($faker->dateTimeBetween('-3 month', 'now'));
             $announcement->setIsAvalaible(mt_rand(0, 1));
             $announcement->setCoverImage("https://i.pinimg.com/originals/74/a1/ce/74a1ce39517604d4812123b25e256f0c.jpg");
+
+            for($j=0; $j<6; $j++)
+            {
+                $comment = new Comment('en_US');
+                $comment->setAuthor($faker->name());
+                $comment->setEmail($faker->email());
+                $comment->setContent($faker->text(100));
+                $comment->setCreatedAt($faker->dateTimeBetween('-3 month', 'now'));
+                $comment->setAnnouncement($announcement);
+
+                $manager->persist($comment);
+                $announcement->addComment($comment);
+            }
 
             $manager->persist($announcement);
         }
