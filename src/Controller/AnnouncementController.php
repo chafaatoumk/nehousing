@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnouncementController extends AbstractController
 {
     /**
-     * @Route("/property-grid", name="property-grid")
+     * @Route("/property", name="property-grid")
      */
     public function index(): Response
     {
@@ -20,19 +20,18 @@ class AnnouncementController extends AbstractController
         $announcements = $repository->findAll();
 
         return $this->render('announcement/property-grid.html.twig', [
-            'controller_name' => 'AnnouncementController',
             'announcements' => $announcements,
         ]);
     }
 
     /**
-     * @Route("/property/{id}", name="property_single")
+     * @Route("/property/{id}", name="property-single")
      */
-    public function show(int $id): Response
+    public function show(int $id, AnnouncementRepository $announcementRepository): Response
     {
-        $announcement = $this->getDoctrine()
-            ->getRepository(Annotation::class)
+        $announcement = $announcementRepository
             ->find($id);
+        $images = $announcement->getImages();
 
         if (!$announcement) {
             throw $this->createNotFoundException(
@@ -40,11 +39,14 @@ class AnnouncementController extends AbstractController
             );
         }
 
-        return new Response('Check out this great property: '.$announcement->getTitle());
+        // return new Response('Check out this great property: '.$announcement->getTitle());
 
         // or render a template
         // in the template, print things with {{ product.name }}
 
-        // return $this->render('announcement/property-single.html.twig', ['annoucement' => $announcement]);
+        return $this->render('announcement/property-single.html.twig', [
+            'announcement' => $announcement,
+            'images' => $images,
+        ]);
     }
 }
