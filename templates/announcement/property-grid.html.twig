@@ -327,11 +327,12 @@
               </div>
             </div>
           </div>
-          {% for announcement in announcements %}
+          {% for announcement in announcements | reverse %}
           <div class="col-md-4">
             <div class="card-box-a card-shadow">
               <div class="img-box-a">
-                <img src="{{ announcement.coverImage }}" alt="" class="img-a img-fluid">
+                <img src="{{ asset('uploads/coverImages/' ~ announcement.coverImage) }}" alt="" class="img-a img-fluid" 
+                  style="width:500px, height:600px">
               </div>
               <div class="card-overlay">
                 <div class="card-overlay-a-content">
@@ -353,7 +354,7 @@
                     <ul class="card-info d-flex justify-content-around">
                       <li>
                         <h4 class="card-info-title">Area</h4>
-                        <span>340m
+                        <span>{{ announcement.area }}m
                           <sup>2</sup>
                         </span>
                       </li>
@@ -363,7 +364,7 @@
                       </li>
                       <li>
                         <h4 class="card-info-title">Baths</h4>
-                        <span>3</span>
+                        <span>{{ announcement.baths }}</span>
                       </li>
                       <li>
                         <h4 class="card-info-title">Avalaibility</h4>

@@ -76,6 +76,16 @@ class Announcement
      */
     private $images;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $baths;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $area;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -198,11 +208,13 @@ class Announcement
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setCreatedAt()
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -261,6 +273,30 @@ class Announcement
                 $image->setAnnouncement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBaths(): ?int
+    {
+        return $this->baths;
+    }
+
+    public function setBaths(int $baths): self
+    {
+        $this->baths = $baths;
+
+        return $this;
+    }
+
+    public function getArea(): ?int
+    {
+        return $this->area;
+    }
+
+    public function setArea(int $area): self
+    {
+        $this->area = $area;
 
         return $this;
     }

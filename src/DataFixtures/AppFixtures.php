@@ -29,6 +29,8 @@ class AppFixtures extends Fixture
             $announcement->setRooms(mt_rand(1, 7));
             $announcement->setCreatedAt($faker->dateTimeBetween('-3 month', 'now'));
             $announcement->setIsAvalaible(mt_rand(0, 1));
+            $announcement->setBaths(mt_rand(1, 10));
+            $announcement->setArea(mt_rand(100, 1000));
             $announcement->setCoverImage("https://picsum.photos/id/".mt_rand(1, 200)."/500/600");
 
             for($j=0; $j<6; $j++)

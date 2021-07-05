@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\AnnouncementRepository;
 use App\Entity\Announcement;
-use Doctrine\ORM\Mapping\Annotation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,6 +31,7 @@ class AnnouncementController extends AbstractController
         $announcement = $announcementRepository
             ->find($id);
         $images = $announcement->getImages();
+        $comments = $announcement->getComments();
 
         if (!$announcement) {
             throw $this->createNotFoundException(
@@ -39,14 +39,11 @@ class AnnouncementController extends AbstractController
             );
         }
 
-        // return new Response('Check out this great property: '.$announcement->getTitle());
-
-        // or render a template
-        // in the template, print things with {{ product.name }}
-
+        // render a template
         return $this->render('announcement/property-single.html.twig', [
             'announcement' => $announcement,
             'images' => $images,
+            'comments' => $comments,
         ]);
     }
 }
