@@ -24,6 +24,7 @@ The above copyright notice and this permission notice shall be included in all c
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <!-- CSS Files -->
   <link href="{{asset('assets/css/material-dashboard.css?v=2.1.2')}}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -173,7 +174,7 @@ The above copyright notice and this permission notice shall be included in all c
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Announcements Table</h4>
+                  <h4 class="card-title ">Announcements Table ({{ announcements | length }}) </h4>
                   <h4 class="card-title" style="float: right"><a href="{{ path('property-new') }}">New Announcement</a></h4>
                   <p class="card-category"> This table shows all announcements</p>
                 </div>
@@ -184,8 +185,8 @@ The above copyright notice and this permission notice shall be included in all c
                         <th>ID</th>
                         <th>Title</th>
                         <th>Address</th>
-                        <th>Avalaibility</th>
                         <th>Price</th>
+                        <th>Avalaibility</th>
                         <th>Action</th>
                       </thead>
                       <tbody>
@@ -194,15 +195,16 @@ The above copyright notice and this permission notice shall be included in all c
                           <td>{{ announcement.id }}</td>
                           <td>{{ announcement.title }}</td>
                           <td>{{ announcement.address }}</td>
-                          {% if announcement.isAvalaible == true %}
-                            <td>Avalaible</td>
-                          {% else %}
-                            <td>Not Avalaible</td>
-                          {% endif %}
                           <td class="text-primary">${{ announcement.price | number_format(0, ',', ' ')}}</td>
-                          <td class="td-actions text-right">
-                              <a href="{{path('property-edit', {'id': announcement.id })}}"><i class="material-icons">edit</i></a>
-                              <a class="btn btn-danger btn-link btn-sm" href="{{ path('property-remove', {'id': announcement.id }) }}"><i class="material-icons">close</i></a>
+                          {% if announcement.isAvalaible == true %}
+                            <td ><i class="fas fa-toggle-on" style="font-size: 30px; color: #9649B6"></i></td>
+                          {% else %}
+                            <td ><i class="fas fa-toggle-off" style="font-size: 30px; color: #9649B6"></td>
+                          {% endif %}
+                          <td class="td-actions">
+                              <a href="{{ path('property-edit', {'id': announcement.id })}}"><i class="material-icons">edit</i></a>
+                              <a href="{{ path('property-remove', {'id': announcement.id }) }}" class="btn btn-danger btn-link btn-sm" style="margin-left: 20px">
+                              <i class="material-icons">close</i></a>
                           </td>
                         </tr>
                       {% endfor %}

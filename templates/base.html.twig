@@ -178,11 +178,15 @@
 
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link " href="about.html">Registration</a>
+                                <a class="nav-link " href="{{ path('app_register') }}">Register</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link " href="about.html">Connexion</a>
+                                <a class="nav-link " href="{{ path('app_login') }}">LogIn</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link " href="{{ path('app_logout') }}">LogOut</a>
                             </li>
                         </ul>
                     </div>
