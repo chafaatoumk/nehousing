@@ -43,6 +43,11 @@ class Comment
      */
     private $announcement;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="comments")
+     */
+    private $utilisateur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class Comment
     public function setAnnouncement(?announcement $announcement): self
     {
         $this->announcement = $announcement;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

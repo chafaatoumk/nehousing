@@ -86,6 +86,12 @@ class Announcement
      */
     private $area;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="announcements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $utilisateur;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -300,4 +306,17 @@ class Announcement
 
         return $this;
     }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
 }
